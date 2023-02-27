@@ -45,14 +45,13 @@ module.exports.createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-
-  userSchema.findOne({ email })
-    .then((user) => {
-      if (user) {
-        throw new ConflictErr('Пользователь с таким email уже существует');
-      }
-      return bcrypt.hash(password, 10);
-    })
+  //
+  // userSchema.findOne({ email })
+  //   .then((user) => {
+  //     if (user) {
+  //       throw new ConflictErr('Пользователь с таким email уже существует');
+  //     }
+  bcrypt.hash(password, 10)
     .then((hash) => userSchema.create({
       email, password: hash, name,
     })
@@ -64,6 +63,8 @@ module.exports.createUser = (req, res, next) => {
       .catch((err) => {
         if (err.name === 'ValidationError') {
           next(new BadRequestErr('Переданы неккоерктные данные'));
+        } else if (err.code === 11000) {
+          next(new ConflictErr('пользователь с таким email уже существует'));
         } else {
           next(err);
         }

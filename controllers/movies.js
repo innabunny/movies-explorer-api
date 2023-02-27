@@ -50,7 +50,7 @@ module.exports.addMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  movieSchema.findById(req.params.movieId)
+  movieSchema.findById(req.params._id)
     .orFail(() => {
       throw new NotFoundErr('Фильм не найден');
     })
@@ -58,10 +58,10 @@ module.exports.deleteMovie = (req, res, next) => {
       if (!movie.owner.equals(req.user._id)) {
         throw new ForbiddenErr('Вы не можете удалять чужие фильмы');
       }
-      return movieSchema.findByIdAndDelete(req.params._id);
+      return movie.remove();
     })
-    .then((movie) => {
-      res.send(movie);
+    .then(() => {
+      res.send({ message: 'Фильм успешно удален' });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
