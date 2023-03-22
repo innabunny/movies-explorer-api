@@ -31,8 +31,11 @@ module.exports.updateUser = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictErr('Данный email уже зарегистрирован'));
+      }
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new BadRequestErr('Переданы неккоректные данные'));
+        return next(new BadRequestErr('Переданы неккоректные данные'));
       } else {
         next(err);
       }
