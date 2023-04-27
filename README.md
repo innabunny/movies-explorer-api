@@ -1,9 +1,6 @@
 # Movies Explorer
 
 ## Репозиторий бэкенда для приложения с API сервером
-https://igmovies-api.nomoredomains.work
-
-# API для дипломного проекта для Яндекс.Практикум
 
 ### Технологии:
 + NodeJS
