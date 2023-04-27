@@ -1,6 +1,6 @@
 # Movies Explorer
 
-## Репозиторий бэкенда для приложения "Movies Explore" с API сервером 
+## Репозиторий бэкенда для приложения "Movies Explorer" с API сервером 
 
 ### Технологии:
 + NodeJS
